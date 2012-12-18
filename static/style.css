@@ -1,0 +1,20 @@
+#menu {
+    width:10%;
+    float:left;
+}
+
+#whiteboard {
+    width:80%;
+    margin-right:5%;
+    float:right;
+    display:inline;
+}
+
+#txtinput{
+    float:left;
+}
+
+.atom {
+    fill:green;
+    z-index:100;
+}

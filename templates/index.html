@@ -1,0 +1,25 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <script src="../static/jquery.js"></script>
+        <script src="../static/d3.js"></script>
+        <script src="../static/chem_draw.js"></script>
+        <link rel="stylesheet" type="text/css" href="../static/style.css"/>
+    </head>
+    <body>
+        <div id="menu" style="float:left;">
+            <button name="atom" type="button">Atom</button><br>
+            <button name="benzene" type="button">Benzene</button><br>
+            <button name="single" type="button">Single</button><br>
+            <button name="double" type="button">Double</button><br>
+            <button name="triple" type="button">Triple</button><br>
+            <button name="dash" type="button">Dash</button><br>
+            <button name="wedge" type="button">Wedge</button><br>
+            <button name="delete" type="button">Delete</button>
+        </div> 
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="whiteboard" width="1400px" height="800px" style="border:solid black 5px; margin-left:20px;"> 
+        </svg> 
+    </body>
+</html>
