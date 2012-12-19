@@ -255,7 +255,7 @@ elementMaker.benzene = function(x, y){
 elementMaker.single = function(x, y) {
     var atom = findAtom(x, y);
     if (atom) { 
-        if (atom.curValence>=atom.maxValence) { return "max valence exceeded"; }
+        if (atom.curValence>=atom.maxValence) { console.log("max valence exceeded"); return; }
     //     console.log("x: " + x);
     //     console.log("y: " + y);
     //     console.log("atom.x: " + atom.x);
@@ -283,22 +283,32 @@ elementMaker.single = function(x, y) {
     if (atom.curValence===1) {atom.tripleAngs = [(rotate+180)%360];}
     else { atom.tripleAngs = []; }
 
+    if(atom.singles===3){
+        atom.singleAngs = [atom.baseAng+60, atom.baseAng+180, atom.baseAng+300];
+    }
+
     d3.select('#whiteboard')
     .append('g')
     .attr('class', 'single')
-    .attr('id', 'current')
+    .attr('id', 'currentBond')
     .attr('transform', 'translate(' + x + ', ' + y + ') rotate(' + (-1*rotate) + ' 0 0)');
 
-    var current = d3.select('#current');
+    var currentBond = d3.select('#currentBond');
+    console.log(currentBond[0][0]);
 
-    current.append('line')
+    currentBond.append('line')
     .attr('x1', 0)
     .attr('y1', 0)
     .attr('x2', 40)
     .attr('y2', 0)
     .attr('style', "stroke:#333; stroke-width:3;");
 
-    current.attr('id', null);
+    currentBond.append('line')
+    .attr('x1', 0)
+    .attr('y1', 0)
+    .attr('x2', 40)
+    .attr('y2', 0)
+    .attr('style', "stroke:#333; stroke-width:6; stroke-opacity:0.0;");
 
     var x2 = x+Math.round(40*Math.cos(toRad(rotate)));
     var y2 = y - Math.round(40*Math.sin(toRad(rotate))) - 2;
@@ -317,30 +327,103 @@ elementMaker.single = function(x, y) {
         elementMaker.atom(x2, y2, rotate);
         var secondAtom = findAtom(x2, y2);
     }
+
+    var clicked = function(d, i) {
+        console.log('ouch!');
+        if (mode=='delete') {
+            document.getElementById('whiteboard').removeChild(currentBond[0][0]);
+            if (secondAtom.curValence===1) {
+               atoms.splice(atoms.indexOf(secondAtom), 1); 
+            }
+            atom.singles -= 1;
+            atom.curValence -= 1;
+            // atom.singleAngs.push(rotate);
+        }
+        d3.event.stopPropagation();
+    }
+    
+    currentBond.on('click', clicked);
+
+    currentBond.attr('id', null);
 }
 
 elementMaker.double = function(x, y) {
+
+    var atom = findAtom(x, y);
+    if (atom) { 
+        if (atom.curValence>=(atom.maxValence-1)) { return "max valence exceeded"; }
+    
+        var dx = x-atom.x;
+        var dy = atom.y-y;
+        var x = atom.x; 
+        var y = atom.y; 
+        if (atom.element=='C') {
+            atom.text.style.fill = '#fff';
+        }
+        atom.curValence += 2;
+    }
+
+    var rotate = findAngle(dx, dy, atom.doubleAngs);
+
+    remove(rotate, atom.singleAngs);
+    if(atom.curValence===2){ atom.doubleAngs = [(rotate+180)%360]; }
+    else {atom.doubleAngs = [];}
+    atom.tripleAngs = [];
+
     d3.select('#whiteboard')
     .append('g')
     .attr('class', 'double')
     .attr('id', 'current')
-    .attr('transform', 'translate(' + x + ", " + y + ")");
+    .attr('transform', 'translate(' + x + ', ' + y + ') rotate(' + (-1*rotate) + ' 0 0)');
 
     var current = d3.select('#current');
 
     current.append('line')
     .attr('x1', 0)
-    .attr('y1', 0)
+    .attr('y1', -2)
     .attr('x2', 40)
-    .attr('y2', 0)
+    .attr('y2', -2)
     .attr('style', "stroke:#333; stroke-width:2;");
 
     current.append('line')
     .attr('x1', 0)
-    .attr('y1', 5)
+    .attr('y1', 2)
     .attr('x2', 40)
-    .attr('y2', 5)
+    .attr('y2', 2)
     .attr('style', "stroke:#333; stroke-width:2;");
+
+    var x2 = x+Math.round(40*Math.cos(toRad(rotate)));
+    var y2 = y - Math.round(40*Math.sin(toRad(rotate))) - 2;
+    console.log("x2: ", x2, "y2: ", y2)
+
+    var secondAtom = findAtom(x2, y2)
+
+    if (secondAtom) { 
+        // console.log('second atom found!!!'); 
+        secondAtom.curValence += 2; 
+        remove((rotate+180)%360, secondAtom.singleAngs);
+        if (secondAtom.curValence === 2) { secondAtom.doubleAngs = [rotate]; }
+        else {secondAtom.doubleAngs = [];}
+        secondAtom.tripleAngs = [];
+    }
+    else {
+        elementMaker.atom(x2-15, y2, rotate);
+        var secondAtom = findAtom(x2, y2);
+    }
+
+    var clicked = function(d, i) {
+        console.log('ouch!');
+        if (mode=='delete') {
+            document.getElementById('whiteboard').removeChild(currentBond[0][0]);
+            if (secondAtom.curValence===2) {
+               atoms.splice(atoms.indexOf(secondAtom), 1); 
+            }
+            atom.curValence -= 2;
+        }
+        d3.event.stopPropagation();
+    }
+    
+    current.on('click', clicked);
 
     current.attr('id', null);
 }
