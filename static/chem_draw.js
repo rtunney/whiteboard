@@ -143,10 +143,11 @@ elementMaker.atom = function(x, y, baseAng){
     current.append('text')
     .attr('x', 0)
     .attr('y', 0)
-    .attr('style', 'font-family:Arial, Helvetica, sans-serif; font-size:14px;')
-    .text('[enter]');
+    .attr('style', 'font-family:Arial, Helvetica, sans-serif; font-size:14px;');
 
     var text = current[0][0].firstChild;
+    if(mode=='atom') {text.textContent = '[enter]'; }
+    else {text.textContent = 'C'; }
 
     var sourceAtom = findAtom(x, y);
     if (baseAng) {}
@@ -175,9 +176,15 @@ elementMaker.atom = function(x, y, baseAng){
             }
             var saveInput = function(saveEvt){
                 if (saveEvt.type=='blur' || saveEvt.keyCode==13){
-                    if (valence[txtinput.value]!==undefined) {
+                    if (txtinput.value == 'C hide') { 
+                        text.style.fill = '#ffffff';
+                        toBack(current[0][0]); 
+                    }
+                    else if (valence[txtinput.value]!==undefined) {
                         text.textContent = txtinput.value;
                         text.style.fill = color[txtinput.value];
+                        if (txtinput.value!=='C') { toFront(current[0][0]);}
+
                         atom.element = txtinput.value;
                         atom.x = x+text.getBBox().width/2;
                         atom.maxValence = valence[txtinput.value];
@@ -196,7 +203,8 @@ elementMaker.atom = function(x, y, baseAng){
 
     document.getElementById('current').addEventListener('click', clicked);
     current.attr('id', null);
-    clicked();
+    if (mode=='atom') {clicked(); }
+    else {atom.element = 'C'; atom.x = x+text.getBBox().width/2; atom.maxValence = valence['C'];}
 }
 
 elementMaker.benzene = function(x, y){
@@ -276,7 +284,7 @@ elementMaker.single = function(x, y) {
     .attr('style', "stroke:#333; stroke-width:3;");
 
     current.attr('id', null);
-
+    
     elementMaker.atom(x + Math.round(40*Math.cos(toRad(rotate))), y - Math.round(40*Math.sin(toRad(rotate))) - 2, rotate);
 }
 
