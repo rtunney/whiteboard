@@ -1,5 +1,5 @@
 var color = {'H':'#aaaaaa', 'C':'#222222', 'N':'#2233ff', 'O':'#ff2200', 'F':'#55bb00', 'Cl':'#55bb00', 'Br':'#992200', 'I':'#6600bb', 'He':'#00ffff', 'Ne':'#00ffff', 'Ar':'#00ffff', 'Kr':'#00ffff', 'Xe':'#00ffff', 'Rn':'#00ffff', 'P':'#ff9900', 'S':'#dddd00', 'Li':'#7700ff', 'Na':'#7700ff', 'K':'#7700ff', 'Rb':'#7700ff', 'Cs':'#7700ff', 'Be':'#007700', 'Mg':'#007700', 'Ca':'#007700', 'Sr':'#007700', 'Ba':'#007700', 'Ra':'#007700', 'Ti':'#999999', 'Fe':'#dd7700'};
-var valence = {'H':1, 'He':0, 'Li':1, 'Be':2, 'B':3, 'C':4, 'N':3, 'O':2, 'F':1, 'Ne':0, 'Na':1, 'Mg':2, 'Al':3, 'Si':4, 'P':5, 'S':6, 'Cl':5, 'Ar':0, 'K':1, 'Ca':2, 'Sc':3, 'Ti':4, 'V':5, 'Cr':6, 'Mn':4, 'Fe':4, 'Co':4, 'Ni':4, 'Cu':2, 'Zn':2, 'Ga':3, 'Ge':4, 'As':5, 'Se':6, 'Br':5, 'Kr':2, 'Rb':1, 'Sr':2, 'Y':3, 'Zr':4, 'Nb':5, 'Mo':6, 'Tc':6, 'Ru':6, 'Rh':6, 'Pd':4, 'Ag':3, 'Cd':2, 'In':3, 'Sn':4, 'Sb':5, 'Te':6, 'I':7, 'Xe':6, 'Cs':1, 'Ba':2, 'La':3, 'Ce':4, 'Pr':4, 'Nd':3, 'Pm':3, 'Sm':3, 'Eu':3, 'Gd':3, 'Tb':4, 'Dy':3, 'Ho':3, 'Er':3, 'Tm':3, 'Yb':3, 'Lu':3, 'Hf':4, 'Ta':5, 'W':6, 'Re':7, 'Os':6, 'Ir':6, 'Pt':6, 'Au':5, 'Hg':4, 'Tl':3, 'Pb':4, 'Bi':5, 'Po':6, 'At':7, 'Rn':6, 'Fr':1, 'Ra':2, 'Ac':3, 'Th':4, 'Pa':5, 'U':6, 'Np':6, 'Pu':6, 'Am':4, 'Cm':4, 'Bk':4, 'Cf':4, 'Es':4, 'Fm':3, 'Md':3, 'No':3, 'Lr':3, 'Rf':4, 'Db':5, 'Sg':6, 'Bh':7, 'Hs':7, 'Mt':7, 'Ds':7, 'Rg':7, 'Cn':6, 'Uut':5, 'Uuq':4}
+var valence = {'H':1, 'He':0, 'Li':1, 'Be':2, 'B':3, 'C':4, 'N':3, 'O':2, 'F':1, 'Ne':0, 'Na':1, 'Mg':2, 'Al':3, 'Si':4, 'P':5, 'S':6, 'Cl':1, 'Ar':0, 'K':1, 'Ca':2, 'Sc':3, 'Ti':4, 'V':5, 'Cr':6, 'Mn':4, 'Fe':4, 'Co':4, 'Ni':4, 'Cu':2, 'Zn':2, 'Ga':3, 'Ge':4, 'As':5, 'Se':6, 'Br':1, 'Kr':2, 'Rb':1, 'Sr':2, 'Y':3, 'Zr':4, 'Nb':5, 'Mo':6, 'Tc':6, 'Ru':6, 'Rh':6, 'Pd':4, 'Ag':3, 'Cd':2, 'In':3, 'Sn':4, 'Sb':5, 'Te':6, 'I':1, 'Xe':6, 'Cs':1, 'Ba':2, 'La':3, 'Ce':4, 'Pr':4, 'Nd':3, 'Pm':3, 'Sm':3, 'Eu':3, 'Gd':3, 'Tb':4, 'Dy':3, 'Ho':3, 'Er':3, 'Tm':3, 'Yb':3, 'Lu':3, 'Hf':4, 'Ta':5, 'W':6, 'Re':7, 'Os':6, 'Ir':6, 'Pt':6, 'Au':5, 'Hg':4, 'Tl':3, 'Pb':4, 'Bi':5, 'Po':6, 'At':7, 'Rn':6, 'Fr':1, 'Ra':2, 'Ac':3, 'Th':4, 'Pa':5, 'U':6, 'Np':6, 'Pu':6, 'Am':4, 'Cm':4, 'Bk':4, 'Cf':4, 'Es':4, 'Fm':3, 'Md':3, 'No':3, 'Lr':3, 'Rf':4, 'Db':5, 'Sg':6, 'Bh':7, 'Hs':7, 'Mt':7, 'Ds':7, 'Rg':7, 'Cn':6, 'Uut':5, 'Uuq':4}
 var atoms = [];
 
 var remove = function(val, list){
@@ -142,14 +142,13 @@ elementMaker.atom = function(x, y, baseAng){
     .attr('class', 'atom')
     .attr('id', 'current')
     .attr('transform', 'translate(' + x + ", " + y + ")")
-    .attr('enable-background', 'new');
 
     var current = d3.select('#current');
 
     current.append('text')
     .attr('x', 0)
     .attr('y', 0)
-    .attr('style', 'font-family:Arial, Helvetica, sans-serif; font-size:14px;');
+    .attr('style', 'font-family:Arial, Helvetica, sans-serif; font-size:14px; stroke-width:4;');
 
     var text = current[0][0].firstChild;
     if(mode=='atom') {text.textContent = '[enter]'; }
@@ -310,6 +309,8 @@ elementMaker.single = function(x, y) {
     .attr('y2', 0)
     .attr('style', "stroke:#333; stroke-width:6; stroke-opacity:0.0;");
 
+    if(atom.element!=='C') { toFront(atom.g);}
+
     var x2 = x+Math.round(40*Math.cos(toRad(rotate)));
     var y2 = y - Math.round(40*Math.sin(toRad(rotate))) - 2;
 
@@ -373,24 +374,26 @@ elementMaker.double = function(x, y) {
     d3.select('#whiteboard')
     .append('g')
     .attr('class', 'double')
-    .attr('id', 'current')
+    .attr('id', 'currentBond')
     .attr('transform', 'translate(' + x + ', ' + y + ') rotate(' + (-1*rotate) + ' 0 0)');
 
-    var current = d3.select('#current');
+    var currentBond = d3.select('#currentBond');
 
-    current.append('line')
+    currentBond.append('line')
     .attr('x1', 0)
     .attr('y1', -2)
     .attr('x2', 40)
     .attr('y2', -2)
     .attr('style', "stroke:#333; stroke-width:2;");
 
-    current.append('line')
+    currentBond.append('line')
     .attr('x1', 0)
     .attr('y1', 2)
     .attr('x2', 40)
     .attr('y2', 2)
     .attr('style', "stroke:#333; stroke-width:2;");
+
+    if(atom.element!=='C') { toFront(atom.g);}
 
     var x2 = x+Math.round(40*Math.cos(toRad(rotate)));
     var y2 = y - Math.round(40*Math.sin(toRad(rotate))) - 2;
@@ -407,8 +410,10 @@ elementMaker.double = function(x, y) {
         secondAtom.tripleAngs = [];
     }
     else {
-        elementMaker.atom(x2-15, y2, rotate);
+        elementMaker.atom(x2, y2, rotate);
         var secondAtom = findAtom(x2, y2);
+        secondAtom.text.style.fill = '#ffffff';
+        toBack(secondAtom.g);
     }
 
     var clicked = function(d, i) {
@@ -423,45 +428,101 @@ elementMaker.double = function(x, y) {
         d3.event.stopPropagation();
     }
     
-    current.on('click', clicked);
+    currentBond.on('click', clicked);
 
-    current.attr('id', null);
+    currentBond.attr('id', null);
 }
 
 elementMaker.triple = function(x, y) {
+    var atom = findAtom(x, y);
+    if (atom) { 
+        if (atom.curValence>=(atom.maxValence-2)) { return "max valence exceeded"; }
+    
+        var dx = x-atom.x;
+        var dy = atom.y-y;
+        var x = atom.x; 
+        var y = atom.y; 
+        if (atom.element=='C') {
+            atom.text.style.fill = '#fff';
+        }
+        atom.curValence += 3;
+    }
+
+    var rotate = findAngle(dx, dy, atom.tripleAngs);
+
+    atom.singleAngs = [(rotate+180)%360];
+    atom.doubleAngs = [];
+    atom.tripleAngs = [];
+
     d3.select('#whiteboard')
     .append('g')
     .attr('class', 'triple')
-    .attr('id', 'current')
-    .attr('transform', 'translate(' + x + ", " + y + ")");
+    .attr('id', 'currentBond')
+    .attr('transform', 'translate(' + x + ', ' + y + ') rotate(' + (-1*rotate) + ' 0 0)');
 
-    var current = d3.select('#current');
+    var currentBond = d3.select('#currentBond');
 
-    current.append('line')
+    currentBond.append('line')
+    .attr('x1', 0)
+    .attr('y1', -3)
+    .attr('x2', 40)
+    .attr('y2', -3)
+    .attr('style', "stroke:#333; stroke-width:1;");
+
+    currentBond.append('line')
     .attr('x1', 0)
     .attr('y1', 0)
     .attr('x2', 40)
     .attr('y2', 0)
     .attr('style', "stroke:#333; stroke-width:1;");
 
-    current.append('line')
+    currentBond.append('line')
     .attr('x1', 0)
     .attr('y1', 3)
     .attr('x2', 40)
     .attr('y2', 3)
     .attr('style', "stroke:#333; stroke-width:1;");
 
-    current.append('line')
-    .attr('x1', 0)
-    .attr('y1', 6)
-    .attr('x2', 40)
-    .attr('y2', 6)
-    .attr('style', "stroke:#333; stroke-width:1;");
+    if(atom.element!=='C') { toFront(atom.g);}
 
-    current.attr('id', null);
+    var x2 = x+Math.round(40*Math.cos(toRad(rotate)));
+    var y2 = y - Math.round(40*Math.sin(toRad(rotate))) - 2;
+    // console.log("x2: ", x2, "y2: ", y2)
+    var secondAtom = findAtom(x2, y2)
+
+    if (secondAtom) { 
+        // console.log('second atom found!!!'); 
+        secondAtom.curValence += 3;
+        secondAtom.singleAngs = [rotate];
+        secondAtom.doubleAngs = []; 
+        secondAtom.tripleAngs = [];
+    }
+    else {
+        elementMaker.atom(x2, y2, rotate);
+        var secondAtom = findAtom(x2, y2);
+        secondAtom.text.style.fill = '#ffffff';
+        toBack(secondAtom.g);
+    }
+
+    var clicked = function(d, i) {
+        console.log('ouch!');
+        if (mode=='delete') {
+            document.getElementById('whiteboard').removeChild(currentBond[0][0]);
+            if (secondAtom.curValence===3) {
+               atoms.splice(atoms.indexOf(secondAtom), 1); 
+            }
+            atom.curValence -= 3;
+        }
+        d3.event.stopPropagation();
+    }
+    
+    currentBond.on('click', clicked);
+
+    currentBond.attr('id', null);
 }
 
 elementMaker.wedge = function(x, y) {
+    
     d3.select('#whiteboard')
     .append('g')
     .attr('class', 'wedge')

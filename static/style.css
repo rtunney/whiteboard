@@ -15,6 +15,6 @@
 }
 
 .atom {
-    fill:green;
+    font-weight:bold;
     z-index:100;
 }
